@@ -22,7 +22,7 @@
       }
       @media (min-width: 992px) {
         .game-container {
-          text-align: right;
+          text-align: center;
         }
         .game {
           height: 75vh;
@@ -41,10 +41,10 @@
             <div class="game"></div>
           </div>
         </div>
-        <div class="col my-auto">
+        <!-- <div class="col my-auto">
           <h1>Tetris</h1>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -60,12 +60,14 @@
         "control" : false,
         theme: 'candy',
         onStart: function () {
+          window.gameStarted = true;
           ga('send', 'event', 'tetris', 'started');
         },
         onLine: function () {
           ga('send', 'event', 'tetris', 'line');
         },
         onGameOver: function (score) {
+          window.gameStarted = false;
           ga('send', 'event', 'tetris', 'over', score);
         }
       });
