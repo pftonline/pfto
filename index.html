@@ -8,14 +8,38 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="blockrain.css">
-    <title>Hello, world!</title>
+    <style>
+      body {
+        background-color: lightgray;
+      }
+      .game-container {
+        text-align: center;
+      }
+      .game {
+        display: inline-block;
+        height: 75vh;
+        width: 100%;
+      }
+      @media (min-width: 992px) {
+        .game {
+          height: 20em;
+          width: 20em;
+        }
+      }
+      
+    </style>
+    <title>Play Free Tetris Online</title>
   </head>
-  <body class="bg-light">
+  <body>
     <div class="container">
-      <div class="row">
-        <div class="py-5 text-center">
-          <h1>Play Free Tetris Online</h1>
-          <div class="game" style="width:250px; height:500px;"></div>
+      <div class="row h-100">
+        <div class="col-sm my-auto">
+          <div class="game-container">
+            <div class="game"></div>
+          </div>
+        </div>
+        <div class="col my-auto">
+          <h1>Tetris</h1>
         </div>
       </div>
     </div>
@@ -27,7 +51,43 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="blockrain.jquery.min.js"></script>
     <script>
-      $('.game').blockrain();
+      $('.game').blockrain({
+        "autoBlockWidth" : false,
+        "blockWidth" : 10,
+        "autoBlockSize": 24,
+        "theme" : "gameboy"
+      });
+
+      $('.game').blockrain('controls', true);
+
+      window.gamePaused = false;
+      window.gameStarted = false;
+
+      $(window.document).keypress(function(event) {
+        if (event.keyCode == '13') {
+          event.preventDefault();
+
+          if (!window.gameStarted) {
+            window.gameStarted = true;
+            $('.game').blockrain('start');
+          } else if (window.gamePaused) {
+            window.gamePaused = false;
+            $('.game').blockrain('resume');
+          } else {
+            $('.game').blockrain('pause');
+            window.gamePaused = true;
+          }
+          return false;
+        } 
+      });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140934027-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'UA-140934027-1');
     </script>
   </body>
 </html>
