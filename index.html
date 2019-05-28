@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="blockrain.css">
     <style>
       body {
-        background-color: lightgray;
+        background-color: black;
       }
       .game-container {
         text-align: center;
@@ -21,16 +21,19 @@
         width: 100%;
       }
       @media (min-width: 992px) {
+        .game-container {
+          text-align: right;
+        }
         .game {
-          height: 20em;
-          width: 20em;
+          height: 75vh;
+          width: 30vw;
         }
       }
-      
     </style>
     <title>Play Free Tetris Online</title>
   </head>
   <body>
+    <p class="d-none d-sm-block d-md-block">&nbsp;</p>
     <div class="container">
       <div class="row h-100">
         <div class="col-sm my-auto">
@@ -54,11 +57,18 @@
       $('.game').blockrain({
         "autoBlockWidth" : false,
         "blockWidth" : 10,
-        "autoBlockSize": 24,
-        "theme" : "gameboy"
+        "control" : false,
+        theme: 'candy',
+        onStart: function () {
+          ga('send', 'event', 'tetris', 'started');
+        },
+        onLine: function () {
+          ga('send', 'event', 'tetris', 'line');
+        },
+        onGameOver: function (score) {
+          ga('send', 'event', 'tetris', 'over', score);
+        }
       });
-
-      $('.game').blockrain('controls', true);
 
       window.gamePaused = false;
       window.gameStarted = false;
@@ -88,6 +98,13 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-140934027-1');
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3901463783745815",
+        enable_page_level_ads: true
+      });
     </script>
   </body>
 </html>
